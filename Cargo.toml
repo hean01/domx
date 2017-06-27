@@ -1,0 +1,8 @@
+[package]
+name = "domx"
+description = "HTML parser and DOM tree builder"
+version = "0.1.0"
+authors = ["Henrik Andersson <henrik.4e@gmail.com>"]
+repository = "https://github.com/hean01/domx.git"
+license = "GPL-3.0"
+keywords = ["HTML", "DOM", "parser"]
