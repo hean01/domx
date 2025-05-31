@@ -120,6 +120,10 @@ impl Parser {
                 // Skip begin of tag
                 '<' => processed += 1,
 
+                '\r' | '\n' => {
+                    processed += 1;
+                },
+
                 // Comment detected
                 '!' => {
                     processed += 1;
