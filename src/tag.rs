@@ -3,6 +3,7 @@ use std;
 /// Enumeration that represents HTML tags.
 #[derive(Clone, PartialEq, Debug)]
 pub enum Tag {
+    Unknown(String),
     A,
     ABBR,
     ACRONYM,
@@ -80,7 +81,7 @@ pub enum Tag {
 
 impl std::fmt::Display for Tag {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match *self {
+        match self {
             Tag::A => f.write_str("a"),
             Tag::ABBR => f.write_str("abr"),
             Tag::ACRONYM => f.write_str("acronym"),
@@ -159,6 +160,7 @@ impl std::fmt::Display for Tag {
             Tag::VAR => f.write_str("var"),
             Tag::VIDEO => f.write_str("video"),
             Tag::WBR => f.write_str("wbr"),
+            Tag::Unknown(s) => f.write_str(s.as_str()),
         }
     }
 }
@@ -255,7 +257,7 @@ impl std::str::FromStr for Tag {
             "var" => Ok(Tag::VAR),
             "video" => Ok(Tag::VIDEO),
             "wbr" => Ok(Tag::WBR),
-            _ => Err(())
+            _ => Ok(Tag::Unknown(s.to_string()))
         }
     }
 }
