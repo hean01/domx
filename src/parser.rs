@@ -367,7 +367,7 @@ impl Parser {
 
                     match tag.name.to_lowercase().parse::<Tag>() {
                         Ok(x) => tag.id = Some(x),
-                        Err(_) => panic!("Failed to parse element {} to enum", tag.name),
+                        Err(_) => panic!("Failed to parse element '{}' to enum", tag.name),
                     }
 
                     *state = match tag.closing {
