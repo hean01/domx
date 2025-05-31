@@ -175,7 +175,7 @@ impl Parser {
     }
 
     // Read data until next inline element
-    fn _state_read_data(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut IsParser) -> usize {
+    fn _state_read_data(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut dyn IsParser) -> usize {
         let mut processed = 0;
 
         for b in buf {
@@ -205,7 +205,7 @@ impl Parser {
     }
 
     // Read data until closing element, eg <script></script>
-    fn _state_read_raw_data(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut IsParser) -> usize {
+    fn _state_read_raw_data(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut dyn IsParser) -> usize {
         let mut processed = 0;
 
         for b in buf {
@@ -248,7 +248,7 @@ impl Parser {
     }
 
 
-    fn _state_read_attribute_value(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut IsParser ) -> usize {
+    fn _state_read_attribute_value(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut dyn IsParser ) -> usize {
         let mut processed = 0;
         for b in buf {
             match *b as char {
@@ -348,7 +348,7 @@ impl Parser {
         return processed;
     }
 
-    fn _state_read_attribute_name(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut IsParser) -> usize {
+    fn _state_read_attribute_name(buf: &Vec<u8>, tag: &mut ParserTag, state: &mut ParserState, handler: &mut dyn IsParser) -> usize {
         let mut processed = 0;
 
         for b in buf {
@@ -419,7 +419,7 @@ impl Parser {
     }
 
     /// Parse a HTML document and call handlers.
-    pub fn parse(source: &mut BufRead, handler: &mut IsParser) -> Result<usize, std::io::Error> {
+    pub fn parse(source: &mut dyn BufRead, handler: &mut dyn IsParser) -> Result<usize, std::io::Error> {
         let mut total_parsed = 0;
         let mut state = ParserState::FindParserTag;
 

@@ -209,7 +209,7 @@ impl Store {
         })
     }
 
-    fn _recurse<F>(self: &Store, id: NodeId, level: usize, mut enter: &mut F)
+    fn _recurse<F>(self: &Store, id: NodeId, level: usize, enter: &mut F)
         where
         F: FnMut(NodeId, usize),
     {
@@ -224,7 +224,7 @@ impl Store {
         }
     }
 
-    fn _recurse_with_output<F1, F2>(self: &Store, id: NodeId, mut enter: &mut F1, mut leave: &mut F2, output: &mut String)
+    fn _recurse_with_output<F1, F2>(self: &Store, id: NodeId, enter: &mut F1, leave: &mut F2, output: &mut String)
         where
         F1: FnMut(&Node, &mut String),
         F2: FnMut(&Node, &mut String),
@@ -285,7 +285,7 @@ impl Store {
         for nid in nodes.iter() {
             {
                 let parent_id = { self.nodes[*nid].as_mut().unwrap().parent.unwrap() };
-                let mut parent = self[parent_id].as_mut().unwrap();
+                let parent = self[parent_id].as_mut().unwrap();
                 parent.children.retain(|&x| x != *nid);
             }
             self[*nid] = None;
@@ -392,7 +392,7 @@ impl Dom {
     /// Use the macro [dom!()] for easier use.
     ///
     /// [dom!()]: macro.dom.html
-    pub fn parse(self: &mut Self, source: &mut std::io::BufRead) -> Result<usize, std::io::Error> {
+    pub fn parse(self: &mut Self, source: &mut dyn std::io::BufRead) -> Result<usize, std::io::Error> {
         Parser::parse(source, self)
     }
 
